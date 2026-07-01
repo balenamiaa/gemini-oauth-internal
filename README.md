@@ -64,6 +64,12 @@ Outputs a valid, auto-refreshed access token directly to stdout. Ideal for scrip
 bb token
 ```
 
+### 4. Configure Client Credentials Manually
+If you do not have Antigravity installed, or want to use your own Google OAuth application credentials, you can configure them manually:
+```bash
+bb configure <client-id> <client-secret>
+```
+
 ---
 
 ## Installation & Setup

@@ -434,11 +434,32 @@
           (do (println "Status: Not Logged In")
               (System/exit 0))))
 
+      "configure"
+      (let [client-id (second args)
+            client-secret (nth args 2 nil)]
+        (if (and client-id client-secret)
+          (let [scopes ["https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/userinfo.email"
+                        "https://www.googleapis.com/auth/userinfo.profile"
+                        "openid"]
+                cfg {:client-id client-id
+                     :client-secret client-secret
+                     :scopes scopes}]
+            (save-creds! cfg default-client-cfg-path)
+            (println "Successfully configured client credentials at:" default-client-cfg-path)
+            (System/exit 0))
+          (do
+            (println "Error: Please provide both <client-id> and <client-secret>.")
+            (println "Usage: clj -m gemini-oauth-internal.core configure <client-id> <client-secret>")
+            (println "       bb configure <client-id> <client-secret>")
+            (System/exit 1))))
+
       ;; default: show usage info
       (do
         (println "Usage: clj -m gemini-oauth-internal.core <command>")
         (println "Commands:")
-        (println "  login   Launch browser and log in with Google account (subscription)")
-        (println "  token   Print current valid access token (refreshes if needed)")
-        (println "  info    Show login status, email, token lifetime and companion project ID")
+        (println "  login       Launch browser and log in with Google account (subscription)")
+        (println "  token       Print current valid access token (refreshes if needed)")
+        (println "  info        Show login status, email, token lifetime and companion project ID")
+        (println "  configure   Manually configure Google OAuth client credentials")
         (System/exit 0)))))

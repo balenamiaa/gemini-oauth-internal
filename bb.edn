@@ -7,4 +7,7 @@
   token {:doc "Print current valid access token (refreshes if needed)"
          :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "token")}
   info  {:doc "Show login status, email, token lifetime and companion project ID"
-         :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "info")}}}
+         :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "info")}
+  configure {:doc "Manually configure the Google OAuth client credentials"
+             :task (let [m (requiring-resolve 'gemini-oauth-internal.core/-main)]
+                     (apply m (cons "configure" *command-line-args*)))}}}
