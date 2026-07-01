@@ -1,0 +1,10 @@
+{:paths ["src"]
+ :deps {cheshire/cheshire {:mvn/version "5.12.0"}
+        http-kit/http-kit {:mvn/version "2.7.0"}}
+ :tasks
+ {login {:doc "Launch browser and log in with Google account (subscription)"
+         :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "login")}
+  token {:doc "Print current valid access token (refreshes if needed)"
+         :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "token")}
+  info  {:doc "Show login status, email, token lifetime and companion project ID"
+         :task ((requiring-resolve 'gemini-oauth-internal.core/-main) "info")}}}
