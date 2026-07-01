@@ -18,9 +18,11 @@
 (def default-client-cfg-path
   (str home "/.gemini/antigravity-client.json"))
 
+;; --- Subscription Endpoints & Model Configuration ---
+
 (def default-code-assist-base
-  "The base URL for Google's internal Code Assist / Companion API.
-   Unlike the public Gemini API (which uses API keys), the subscription/companion API
+  "The base URL for Google's internal Code Assist / Companion API ring.
+   Unlike the public Gemini API (which uses API keys), this companion API
    expects an OAuth Bearer token authenticated under the Antigravity client."
   "https://daily-cloudcode-pa.googleapis.com/v1internal")
 
@@ -34,6 +36,18 @@
   "Target endpoint for streaming generated content under the subscription model.
    Expects a POST request with the wrapped payload, using alt=sse."
   (str default-code-assist-base ":streamGenerateContent?alt=sse"))
+
+(def subscription-models
+  "Pre-configured model IDs served by Google's internal companion/subscription ring.
+   These are optimized for agent use cases and have thinking levels pre-baked:
+   - :driver-flash (gemini-3-flash-agent) : Gemini 3.5 Flash (High thinking level, default driver)
+   - :expert-pro   (gemini-pro-agent)     : Gemini 3.1 Pro (High thinking level, deep expert)
+   - :flash-medium (gemini-3.5-flash-low) : Gemini 3.5 Flash (Medium thinking level)
+   - :flash-low    (gemini-3.5-flash-extra-low) : Gemini 3.5 Flash (Low thinking level)"
+  {:driver-flash "gemini-3-flash-agent"
+   :expert-pro   "gemini-pro-agent"
+   :flash-medium "gemini-3.5-flash-low"
+   :flash-low    "gemini-3.5-flash-extra-low"})
 
 (def default-login-port 8085)
 
